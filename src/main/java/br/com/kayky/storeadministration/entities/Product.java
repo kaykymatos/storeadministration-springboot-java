@@ -1,21 +1,37 @@
 package br.com.kayky.storeadministration.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Product {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-	private Integer id;
+@Entity
+@Table(name = "tb_product")
+public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String name;
 	private String description;
 	private Double price;
-	private Category category;
 
-	private User user;
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private Category category;
 
 	public Product() {
 	}
 
-	public Product(Integer id, String name, String description, Double price, Category category) {
+	public Product(Long id, String name, String description, Double price, Category category) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -24,11 +40,11 @@ public class Product {
 		this.category = category;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -58,18 +74,6 @@ public class Product {
 
 	public Category getCategory() {
 		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	@Override
