@@ -1,11 +1,10 @@
 package br.com.kayky.storeadministration.services.exception;
 
-public class ObjectNotFoundException extends RuntimeException {
+public class DatabaseException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ObjectNotFoundException(String msg) {
+	public DatabaseException(String msg) {
 		super(msg);
 	}
-
 }

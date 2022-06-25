@@ -6,33 +6,33 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.kayky.storeadministration.entities.User;
-import br.com.kayky.storeadministration.repository.UserRepository;
+import br.com.kayky.storeadministration.entities.Client;
+import br.com.kayky.storeadministration.repository.ClientRepository;
 import br.com.kayky.storeadministration.services.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class UserService {
+public class ClientService {
 
 	@Autowired
-	public UserRepository repository;
+	public ClientRepository repository;
 
-	public List<User> getAllUsers() {
+	public List<Client> getAllClientes() {
 		return repository.findAll();
 	}
 
-	public User findById(Long id) {
-		Optional<User> obj = repository.findById(id);
+	public Client findById(Long id) {
+		Optional<Client> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
-	public User insertUser(User obj) {
+	public Client insertClient(Client obj) {
 		return repository.save(obj);
 	}
 
-	public User updateUser(Long id, User obj) {
+	public Client updateClient(Long id, Client obj) {
 		try {
-			User entity = findById(id);
+			Client entity = findById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -40,13 +40,15 @@ public class UserService {
 		}
 	}
 
-	public void deleteUser(Long id) {
+	public void deleteClient(Long id) {
 		findById(id);
 		repository.deleteById(id);
 	}
 
-	public void updateData(User entity, User obj) {
+	public void updateData(Client entity, Client obj) {
+		entity.setEmail(obj.getEmail());
 		entity.setName(obj.getName());
-		entity.setPassword(obj.getPassword());
+		entity.setPhoneNumber(obj.getPhoneNumber());
+		entity.setAddress(obj.getAddress());
 	}
 }

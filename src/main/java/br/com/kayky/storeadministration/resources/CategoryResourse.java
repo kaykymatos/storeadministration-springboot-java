@@ -1,4 +1,4 @@
-package br.com.kayky.storeadministration.resourses;
+package br.com.kayky.storeadministration.resources;
 
 import java.net.URI;
 import java.util.List;
@@ -12,40 +12,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.kayky.storeadministration.entities.User;
-import br.com.kayky.storeadministration.services.UserService;
+import br.com.kayky.storeadministration.entities.Category;
+import br.com.kayky.storeadministration.services.CategoryService;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserResourse {
+@RequestMapping(value = "/categories")
+public class CategoryResourse {
 
 	@Autowired
-	private UserService service;
+	private CategoryService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<User>> findAll() {
+	public ResponseEntity<List<Category>> findAllCategories() {
 
-		List<User> list = service.getAllUsers();
+		List<Category> list = service.getAllCategories();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<User> findById(@PathVariable Long id) {
-		User obj = service.findById(id);
+	public ResponseEntity<Category> findCategoryById(@PathVariable Long id) {
+		Category obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<User> postUser(@RequestBody User user) {
-		User obj = service.insertUser(user);
+	public ResponseEntity<Category> postCategory(@RequestBody Category Category) {
+		Category obj = service.insertCategory(Category);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(obj);
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category obj) {
+		obj = service.updateCategory(id, obj);
+		return ResponseEntity.ok().body(obj);
+	}
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
-		service.deleteUser(id);
+	public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
+		service.deleteCategory(id);
 
 		return ResponseEntity.noContent().build();
 	}

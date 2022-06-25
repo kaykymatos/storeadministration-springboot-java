@@ -9,12 +9,16 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.kayky.storeadministration.entities.Address;
 import br.com.kayky.storeadministration.entities.Category;
+import br.com.kayky.storeadministration.entities.Client;
 import br.com.kayky.storeadministration.entities.Product;
+import br.com.kayky.storeadministration.entities.Sale;
 import br.com.kayky.storeadministration.entities.Seller;
 import br.com.kayky.storeadministration.entities.User;
 import br.com.kayky.storeadministration.repository.AddressRepository;
 import br.com.kayky.storeadministration.repository.CategoryRepository;
+import br.com.kayky.storeadministration.repository.ClientRepository;
 import br.com.kayky.storeadministration.repository.ProductRepository;
+import br.com.kayky.storeadministration.repository.SaleRepository;
 import br.com.kayky.storeadministration.repository.SellerRepository;
 import br.com.kayky.storeadministration.repository.UserRepository;
 
@@ -32,6 +36,11 @@ public class TesteConfig implements CommandLineRunner {
 	public SellerRepository sellerRepository;
 	@Autowired
 	public AddressRepository addressRepository;
+	@Autowired
+	public SaleRepository saleRepository;
+
+	@Autowired
+	public ClientRepository clientRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -46,26 +55,26 @@ public class TesteConfig implements CommandLineRunner {
 		User user9 = new User(null, "Jennifer", "jennifer@gmail.com", "password");
 		userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5, user6, user7, user8, user9));
 
-		Address addr1 = new Address(null,"Street 1","1","Texas",null);
-		Address addr2 = new Address(null,"Street 2","2","Montana",null);
-		Address addr3 = new Address(null,"Street 3","3","Alasca",null);
-		Address addr4 = new Address(null,"Street 4","4","Havai",null);
-		Address addr5 = new Address(null,"Street 5","5","Arizona",null);
-		Address addr6 = new Address(null,"Street 6","6","Colorado",null);
-		Address addr7 = new Address(null,"Street 7","7","Ohio",null);
-		Address addr8 = new Address(null,"Street 8","8","Oregon",null);
-		Address addr9 = new Address(null,"Street 9","9","Maryland",null);
-		addressRepository.saveAll(Arrays.asList(addr1,addr2,addr3,addr4,addr5,addr6,addr7,addr8,addr9));
+		Address addr1 = new Address(null, "Street 1", "1", "Texas", null);
+		Address addr2 = new Address(null, "Street 2", "2", "Montana", null);
+		Address addr3 = new Address(null, "Street 3", "3", "Alasca", null);
+		Address addr4 = new Address(null, "Street 4", "4", "Havai", null);
+		Address addr5 = new Address(null, "Street 5", "5", "Arizona", null);
+		Address addr6 = new Address(null, "Street 6", "6", "Colorado", null);
+		Address addr7 = new Address(null, "Street 7", "7", "Ohio", null);
+		Address addr8 = new Address(null, "Street 8", "8", "Oregon", null);
+		Address addr9 = new Address(null, "Street 9", "9", "Maryland", null);
+		addressRepository.saveAll(Arrays.asList(addr1, addr2, addr3, addr4, addr5, addr6, addr7, addr8, addr9));
 
-		Seller sell1 = new Seller(null, "Matias", "Matias","matias@gmail.com","(11) 11111-1111",addr1);
-		Seller sell2 = new Seller(null, "Bryan", "Bryan","bryan@gmail.com","(22) 22222-2222",addr2);
-		Seller sell3 = new Seller(null, "Ryan", "Ryan","ryan@gmail.com","(33) 33333-3333",addr3);
-		Seller sell4 = new Seller(null, "Joana", "Joana","joana@gmail.com","(44) 44444-4444",addr4);
-		Seller sell5 = new Seller(null, "Mariana", "Mariana","mariana@gmail.com","(55) 55555-5555",addr5);
-		Seller sell6 = new Seller(null, "Júlia", "Júlia","julia@gmail.com","(66) 66666-6666",addr6);
-		Seller sell7 = new Seller(null, "Mario", "Mario","mario@gmail.com","(77) 77777-7777",addr7);
-		Seller sell8 = new Seller(null, "Marcos", "Marcos","marcos@gmail.com","(88) 88888-8888",addr8);
-		Seller sell9 = new Seller(null, "Jefferson", "Jefferson","jefferson@gmail.com","(99) 99999-9999",addr9);
+		Seller sell1 = new Seller(null, "Matias", "Matias", "matias@gmail.com", "(11) 11111-1111", addr1);
+		Seller sell2 = new Seller(null, "Bryan", "Bryan", "bryan@gmail.com", "(22) 22222-2222", addr2);
+		Seller sell3 = new Seller(null, "Ryan", "Ryan", "ryan@gmail.com", "(33) 33333-3333", addr3);
+		Seller sell4 = new Seller(null, "Joana", "Joana", "joana@gmail.com", "(44) 44444-4444", addr4);
+		Seller sell5 = new Seller(null, "Mariana", "Mariana", "mariana@gmail.com", "(55) 55555-5555", addr5);
+		Seller sell6 = new Seller(null, "Júlia", "Júlia", "julia@gmail.com", "(66) 66666-6666", addr6);
+		Seller sell7 = new Seller(null, "Mario", "Mario", "mario@gmail.com", "(77) 77777-7777", addr7);
+		Seller sell8 = new Seller(null, "Marcos", "Marcos", "marcos@gmail.com", "(88) 88888-8888", addr8);
+		Seller sell9 = new Seller(null, "Jefferson", "Jefferson", "jefferson@gmail.com", "(99) 99999-9999", addr9);
 		sellerRepository.saveAll(Arrays.asList(sell1, sell2, sell3, sell4, sell5, sell6, sell7, sell8, sell9));
 
 		Category cat1 = new Category(null, "Alimentos ");
@@ -91,5 +100,27 @@ public class TesteConfig implements CommandLineRunner {
 		Product prod8 = new Product(null, "Computador", "Computador completo, o melhor para trabalho!", 2000.99, cat8);
 		Product prod9 = new Product(null, "Teclado", "Teclado RGB gamer, ótimo para quem gosta de jogar", 102.99, cat9);
 		productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9));
+
+		Sale sal1 = new Sale(null, 10.0, sell1, prod1);
+		Sale sal2 = new Sale(null, 10.0, sell2, prod2);
+		Sale sal3 = new Sale(null, 10.0, sell3, prod3);
+		Sale sal4 = new Sale(null, 10.0, sell4, prod4);
+		Sale sal5 = new Sale(null, 10.0, sell5, prod5);
+		Sale sal6 = new Sale(null, 10.0, sell6, prod6);
+		Sale sal7 = new Sale(null, 10.0, sell7, prod7);
+		Sale sal8 = new Sale(null, 10.0, sell8, prod8);
+		Sale sal9 = new Sale(null, 10.0, sell9, prod9);
+		saleRepository.saveAll(Arrays.asList(sal1, sal2, sal3, sal4, sal5, sal6, sal7, sal8, sal9));
+
+		Client cli1 = new Client(null, "Jonas", "jonas3324@gmail.com", "(11) 111111-111111", addr1);
+		Client cli2 = new Client(null, "João", "joao123@gmail.com", "(22) 222222-222222", addr2);
+		Client cli3 = new Client(null, "Paulo", "paulo766@gmail.com", "(33) 333333-333333", addr3);
+		Client cli4 = new Client(null, "Pedro", "pedro123@gmail.com", "(44) 444444-444444", addr4);
+		Client cli5 = new Client(null, "Antenor", "antenor.d.silva@gmail.com", "(55) 555555-555555", addr5);
+		Client cli6 = new Client(null, "Piter", "piter88@gmail.com", "(66) 666666-666666", addr6);
+		Client cli7 = new Client(null, "Marcio", "marcio9889@gmail.com", "(77) 777777-777777", addr7);
+		Client cli8 = new Client(null, "Tonho", "tonho95737@gmail.com", "(88) 888888-888888", addr8);
+		Client cli9 = new Client(null, "Mariana", "mariana9588@gmail.com", "(99) 999999-999999", addr9);
+		clientRepository.saveAll(Arrays.asList(cli1, cli2, cli3, cli4, cli5, cli6, cli7, cli8, cli9));
 	}
 }

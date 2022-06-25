@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.kayky.storeadministration.entities.Category;
 import br.com.kayky.storeadministration.repository.CategoryRepository;
-import br.com.kayky.storeadministration.services.exception.ObjectNotFoundException;
+import br.com.kayky.storeadministration.services.exception.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CategoryService {
@@ -22,7 +23,17 @@ public class CategoryService {
 
 	public Category findById(Long id) {
 		Optional<Category> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+	}
+
+	public Category updateCategory(Long id, Category obj) {
+		try {
+			Category entity = findById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	public Category insertCategory(Category obj) {
@@ -32,5 +43,9 @@ public class CategoryService {
 	public void deleteCategory(Long id) {
 		findById(id);
 		repository.deleteById(id);
+	}
+
+	public void updateData(Category entity, Category obj) {
+		entity.setDescription(obj.getDescription());
 	}
 }

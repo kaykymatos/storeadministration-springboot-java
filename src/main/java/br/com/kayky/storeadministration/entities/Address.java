@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_address")
-public class Address implements Serializable{
+public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

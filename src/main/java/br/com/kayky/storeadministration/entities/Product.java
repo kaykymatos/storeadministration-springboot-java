@@ -3,6 +3,7 @@ package br.com.kayky.storeadministration.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Product implements Serializable {
 
 	private String name;
 	private String description;
+	@Column(precision = 10, scale = 2)
 	private Double price;
 
 	@ManyToOne
@@ -74,6 +76,10 @@ public class Product implements Serializable {
 
 	public Category getCategory() {
 		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Override

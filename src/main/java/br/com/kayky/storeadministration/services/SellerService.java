@@ -24,7 +24,17 @@ public class SellerService {
 	public Seller findById(Long id) {
 		Optional<Seller> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+	}
+
+	public Seller updateAddress(Long id, Seller obj) {
+		try {
+			Seller entity = findById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
 		}
+	}
 
 	public Seller insertSeller(Seller obj) {
 		return repository.save(obj);
@@ -49,7 +59,7 @@ public class SellerService {
 		entity.setName(obj.getName());
 		entity.setFantasyName(obj.getFantasyName());
 		entity.setEmail(obj.getEmail());
-		entity.setPhone(obj.getPhone());
+		entity.setPhoneNumber(obj.getPhoneNumber());
 	}
 
 }

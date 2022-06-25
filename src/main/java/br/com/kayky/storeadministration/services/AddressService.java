@@ -17,7 +17,7 @@ public class AddressService {
 	@Autowired
 	public AddressRepository repository;
 
-	public List<Address> getAllAddresses() {
+	public List<Address> getAllAdresses() {
 		return repository.findAll();
 	}
 

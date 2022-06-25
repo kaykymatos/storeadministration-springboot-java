@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.kayky.storeadministration.entities.Product;
 import br.com.kayky.storeadministration.repository.ProductRepository;
-import br.com.kayky.storeadministration.services.exception.ObjectNotFoundException;
+import br.com.kayky.storeadministration.services.exception.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -21,11 +22,21 @@ public class ProductService {
 
 	public Product findById(Long id) {
 		Optional<Product> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public Product insertProduct(Product obj) {
 		return repository.save(obj);
+	}
+
+	public Product updateProduct(Long id, Product obj) {
+		try {
+			Product entity = findById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	public void deleteProduct(Long id) {
@@ -33,4 +44,10 @@ public class ProductService {
 		repository.deleteById(id);
 	}
 
+	public void updateData(Product entity, Product obj) {
+		entity.setDescription(obj.getDescription());
+		entity.setName(obj.getName());
+		entity.setPrice(obj.getPrice());
+		entity.setCategory(obj.getCategory());
+	}
 }

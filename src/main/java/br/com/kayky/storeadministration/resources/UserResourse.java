@@ -1,4 +1,4 @@
-package br.com.kayky.storeadministration.resourses;
+package br.com.kayky.storeadministration.resources;
 
 import java.net.URI;
 import java.util.List;
@@ -12,46 +12,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.kayky.storeadministration.entities.Seller;
-import br.com.kayky.storeadministration.services.SellerService;
+import br.com.kayky.storeadministration.entities.User;
+import br.com.kayky.storeadministration.services.UserService;
 
 @RestController
-@RequestMapping(value = "/sellers")
-public class SellerResourse {
+@RequestMapping(value = "/users")
+public class UserResourse {
 
 	@Autowired
-	private SellerService service;
+	private UserService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Seller>> findAll() {
+	public ResponseEntity<List<User>> findAllUsers() {
 
-		List<Seller> list = service.getAllSellers();
+		List<User> list = service.getAllUsers();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Seller> findById(@PathVariable Long id) {
-		Seller obj = service.findById(id);
+	public ResponseEntity<User> findUserById(@PathVariable Long id) {
+		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Seller> postSeller(@RequestBody Seller Seller) {
-		Seller obj = service.insertSeller(Seller);
+	public ResponseEntity<User> postUser(@RequestBody User user) {
+		User obj = service.insertUser(user);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(obj);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Seller> update(@PathVariable Long id, @RequestBody Seller obj) {
-		obj = service.updateSeller(id, obj);
+	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User obj) {
+		obj = service.updateUser(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Seller> deleteSeller(@PathVariable Long id) {
-		service.deleteSeller(id);
+	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
+		service.deleteUser(id);
 
 		return ResponseEntity.noContent().build();
 	}

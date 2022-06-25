@@ -1,4 +1,4 @@
-package br.com.kayky.storeadministration.resourses;
+package br.com.kayky.storeadministration.resources;
 
 import java.net.URI;
 import java.util.List;
@@ -23,13 +23,13 @@ public class ProductResourse {
 	private ProductService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Product>> findAll() {
+	public ResponseEntity<List<Product>> findAllProducts() {
 		List<Product> list = service.getAllProducts();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Product> findById(@PathVariable Long id) {
+	public ResponseEntity<Product> findProductById(@PathVariable Long id) {
 		Product obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -40,6 +40,12 @@ public class ProductResourse {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).body(obj);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product obj) {
+		obj = service.updateProduct(id, obj);
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
