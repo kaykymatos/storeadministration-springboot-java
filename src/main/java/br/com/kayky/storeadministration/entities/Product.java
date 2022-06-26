@@ -1,7 +1,10 @@
 package br.com.kayky.storeadministration.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,21 +29,29 @@ public class Product implements Serializable {
 	private String description;
 	@Column(precision = 10, scale = 2)
 	private Double price;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant registrationDate;
 
 	@ManyToOne
 	@JoinColumn(name = "categoria_id")
 	private Category category;
 
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
 	public Product() {
 	}
 
-	public Product(Long id, String name, String description, Double price, Category category) {
+	public Product(Long id, String name, String description, Double price, Category category,User user) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.category = category;
+		this.registrationDate = Instant.now();
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -81,7 +93,12 @@ public class Product implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
+	public User getUser() {
+		return user;
+	}
+	public Instant getRegistrationDate() {
+		return registrationDate;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

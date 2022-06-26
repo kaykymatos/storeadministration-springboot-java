@@ -1,10 +1,12 @@
 package br.com.kayky.storeadministration.entities;
 
+import java.time.Instant;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,6 +17,10 @@ public class Seller extends People {
 	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address address;
+
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	public Seller() {
 	}
@@ -28,7 +34,7 @@ public class Seller extends People {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Seller(Long id, String name, String fantasyName, String email, String phoneNumber, Address address) {
+	public Seller(Long id, String name, String fantasyName, String email, String phoneNumber, Address address,User user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -36,6 +42,9 @@ public class Seller extends People {
 		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
+		this.registrationDate = Instant.now();
+		this.user = user;
+
 	}
 
 	public String getFantasyName() {
@@ -54,6 +63,12 @@ public class Seller extends People {
 		this.address = address;
 	}
 
+	public User getUser() {
+		return user;
+	}
+	public Instant getRegistrationDate() {
+		return registrationDate;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

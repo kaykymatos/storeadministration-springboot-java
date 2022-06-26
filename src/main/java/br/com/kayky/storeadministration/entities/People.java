@@ -1,5 +1,9 @@
 package br.com.kayky.storeadministration.entities;
 
+import java.time.Instant;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,6 +20,8 @@ public class People {
 	protected String name;
 	protected String email;
 	protected String phoneNumber;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	protected Instant registrationDate;
 
 	public Long getId() {
 		return id;

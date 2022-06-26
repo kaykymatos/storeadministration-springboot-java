@@ -1,5 +1,6 @@
 package br.com.kayky.storeadministration.entities;
 
+import java.time.Instant;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -10,7 +11,6 @@ import jakarta.persistence.Table;
 public class User extends People {
 
 	private String password;
-
 	public User() {
 	}
 
@@ -20,6 +20,7 @@ public class User extends People {
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.registrationDate = Instant.now();
 	}
 
 	public String getPassword() {
@@ -29,7 +30,9 @@ public class User extends People {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	public Instant getRegistrationDate() {
+		return registrationDate;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

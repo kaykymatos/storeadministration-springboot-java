@@ -1,12 +1,17 @@
 package br.com.kayky.storeadministration.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,18 +26,27 @@ public class Address implements Serializable {
 	private String street;
 	private String houseNumber;
 	private String state;
-	private String references;
+	private String addressReferences;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant registrationDate;
+
+
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	public Address() {
 	}
 
-	public Address(Long id, String street, String houseNumber, String state, String references) {
+	public Address(Long id, String street, String houseNumber, String state, String addressReferences,User user) {
 		super();
 		this.id = id;
 		this.street = street;
 		this.houseNumber = houseNumber;
 		this.state = state;
-		this.references = references;
+		this.addressReferences = addressReferences;
+		this.registrationDate = Instant.now();
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -67,14 +81,19 @@ public class Address implements Serializable {
 		this.state = state;
 	}
 
-	public String getReferences() {
-		return references;
+	public String getAddressReferences() {
+		return addressReferences;
 	}
 
-	public void setReferences(String references) {
-		this.references = references;
+	public void setAddressReferences(String addressReferences) {
+		this.addressReferences = addressReferences;
 	}
-
+	public User getUser() {
+		return user;
+	}
+	public Instant getRegistrationDate() {
+		return registrationDate;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

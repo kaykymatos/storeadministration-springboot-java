@@ -49,6 +49,6 @@ public class AddressService {
 		entity.setStreet(obj.getStreet());
 		entity.setState(obj.getState());
 		entity.setHouseNumber(obj.getHouseNumber());
-		entity.setReferences(obj.getReferences());
+		entity.setAddressReferences(obj.getAddressReferences());
 	}
 }

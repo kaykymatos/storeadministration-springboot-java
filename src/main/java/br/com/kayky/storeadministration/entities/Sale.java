@@ -1,7 +1,10 @@
 package br.com.kayky.storeadministration.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +25,8 @@ public class Sale implements Serializable {
 	private Long id;
 	private Double quantity;
 	private Double price;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant moment;
 
 	@ManyToOne
 	@JoinColumn(name = "seller_id")
@@ -30,6 +36,10 @@ public class Sale implements Serializable {
 	@JoinColumn(name = "product_id")
 	private Product product;
 
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+	private Instant registrationDate;
 	public Sale() {
 	}
 
@@ -40,13 +50,15 @@ public class Sale implements Serializable {
 		this.price = this.calcTotalValue(product, quantity);
 	}
 
-	public Sale(Long id, Double quantity, Seller seller, Product product) {
+	public Sale(Long id, Double quantity, Seller seller, Product product, User user) {
 		super();
 		this.id = id;
 		this.quantity = quantity;
 		this.seller = seller;
 		this.product = product;
 		this.price = this.calcTotalValue(product, quantity);
+		this.moment = Instant.now();
+		this.user = user;
 	}
 
 	public Long getId() {
@@ -84,7 +96,15 @@ public class Sale implements Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
+	public User getUser() {
+		return user;
+	}
+	public Instant getMoment() {
+		return moment;
+	}
+	public Instant getRegistrationDate() {
+		return registrationDate;
+	}
 	public Double calcTotalValue(Product prod, double quantity) {
 		return prod.getPrice() * quantity;
 
@@ -104,4 +124,5 @@ public class Sale implements Serializable {
 		Sale other = (Sale) obj;
 		return Objects.equals(id, other.id);
 	}
+
 }
