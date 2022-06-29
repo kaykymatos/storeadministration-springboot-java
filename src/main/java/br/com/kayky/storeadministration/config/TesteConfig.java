@@ -90,20 +90,20 @@ public class TesteConfig implements CommandLineRunner {
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9));
 
 		Product prod1 = new Product(null, "Pão de Queijo", "Pão de Queijo mineiro o melhor que tem", 10.99, cat1,
-				user1);
-		Product prod2 = new Product(null, "Carne", "Carne fresca, ótima para fazer churrascos", 30.99, cat2, user2);
-		Product prod3 = new Product(null, "Manga", "Manga fresca", 3.99, cat3, user3);
+				10.0,user1);
+		Product prod2 = new Product(null, "Carne", "Carne fresca, ótima para fazer churrascos", 30.99, cat2, 10.0,user2);
+		Product prod3 = new Product(null, "Manga", "Manga fresca", 3.99, cat3,10.0, user3);
 		Product prod4 = new Product(null, "Detergente", "Detergente ótimo para lavar louça e limpar locais sujos", 5.99,
-				cat4, user4);
+				cat4, 10.0,user4);
 		Product prod5 = new Product(null, "Sabão", "Sabão, o melhor sabonete com um cheiro excelente", 10.99, cat5,
-				user5);
-		Product prod6 = new Product(null, "Água", "Água, se idrate faz bem! Agua fresca", 6.99, cat6, user6);
+				10.0,user5);
+		Product prod6 = new Product(null, "Água", "Água, se idrate faz bem! Agua fresca", 6.99, cat6,10.0, user6);
 		Product prod7 = new Product(null, "Livro", "Melhor livro de histórias onde ha váris contos e fantasias", 8.99,
-				cat7, user7);
+				cat7,10.0, user7);
 		Product prod8 = new Product(null, "Computador", "Computador completo, o melhor para trabalho!", 2000.99, cat8,
-				user8);
+				10.0,user8);
 		Product prod9 = new Product(null, "Teclado", "Teclado RGB gamer, ótimo para quem gosta de jogar", 102.99, cat9,
-				user9);
+				10.0,user9);
 		productRepository.saveAll(Arrays.asList(prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9));
 
 		Sale sal1 = new Sale(null, 10.0, sell1, prod1, user1);

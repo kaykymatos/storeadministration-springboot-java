@@ -36,6 +36,7 @@ public class Address implements Serializable {
 	private User user;
 
 	public Address() {
+		this.registrationDate = Instant.now();
 	}
 
 	public Address(Long id, String street, String houseNumber, String state, String addressReferences,User user) {

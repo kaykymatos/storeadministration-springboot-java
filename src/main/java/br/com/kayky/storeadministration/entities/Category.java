@@ -31,6 +31,7 @@ public class Category implements Serializable {
 	private User user;
 
 	public Category() {
+		this.registrationDate = Instant.now();
 	}
 
 	public Category(Long id, String description,User user) {

@@ -39,8 +39,9 @@ public class Sale implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	private Instant registrationDate;
+
 	public Sale() {
+		this.moment = Instant.now();
 	}
 
 	public Sale(Sale sale) {
@@ -48,6 +49,7 @@ public class Sale implements Serializable {
 		this.seller = sale.seller;
 		this.product = sale.product;
 		this.price = this.calcTotalValue(product, quantity);
+		this.moment = Instant.now();
 	}
 
 	public Sale(Long id, Double quantity, Seller seller, Product product, User user) {
@@ -96,15 +98,15 @@ public class Sale implements Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public Instant getMoment() {
 		return moment;
 	}
-	public Instant getRegistrationDate() {
-		return registrationDate;
-	}
+
 	public Double calcTotalValue(Product prod, double quantity) {
 		return prod.getPrice() * quantity;
 

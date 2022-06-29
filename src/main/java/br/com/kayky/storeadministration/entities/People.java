@@ -22,6 +22,10 @@ public class People {
 	protected String phoneNumber;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	protected Instant registrationDate;
+	
+	public People() {
+		this.registrationDate = Instant.now();
+	}
 
 	public Long getId() {
 		return id;

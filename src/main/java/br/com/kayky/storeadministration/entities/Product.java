@@ -31,6 +31,7 @@ public class Product implements Serializable {
 	private Double price;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant registrationDate;
+	private Double stockQuantity;
 
 	@ManyToOne
 	@JoinColumn(name = "categoria_id")
@@ -41,9 +42,10 @@ public class Product implements Serializable {
 	private User user;
 
 	public Product() {
+		this.registrationDate = Instant.now();
 	}
 
-	public Product(Long id, String name, String description, Double price, Category category,User user) {
+	public Product(Long id, String name, String description, Double price, Category category,Double stockQuantity, User user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -51,6 +53,7 @@ public class Product implements Serializable {
 		this.price = price;
 		this.category = category;
 		this.registrationDate = Instant.now();
+		this.stockQuantity= stockQuantity;
 		this.user = user;
 	}
 
@@ -93,12 +96,23 @@ public class Product implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
+	public Double getStockQuantity() {
+		return stockQuantity;
+	}
+
+	public void setStockQuantity(Double stockQuantity) {
+		this.stockQuantity = stockQuantity;
+	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public Instant getRegistrationDate() {
 		return registrationDate;
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
